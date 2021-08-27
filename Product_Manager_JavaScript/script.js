@@ -1,5 +1,7 @@
 let products = [];
 const key = "data-mobile";
+const defaultPagesize = 10;
+const defaultPageindex = 1;
 class Product {
   constructor(name, brand) {
     this.name = name;
@@ -16,14 +18,15 @@ function init() {
   getLocalStorage();
 }
 }
-function showProduct() {
+function showProduct(data, pagesize, pageindex) {
   let tbproduct = document.getElementById("tbproduct");
   tbproduct.innerHTML = "";
-  for (let i = products.length - 1; i >0 ; i--) {
+  let list = data.slice((pageindex -1)* pagesize, pageindex * pagesize);
+  for (let i = 0; i <list.length ; i++) {
     tbproduct.innerHTML += `<tr id="tr_${i}">
-                              <td>${i }</td>
-                              <td>${products[i].name}</td>
-                              <td>${products[i].brand}</td>
+                              <td>${i + (pageindex -1)* pagesize + 1 }</td>
+                              <td>${list[i].name}</td>
+                              <td>${list[i].brand}</td>
                               <td> <a href="javascript:;"  id="show" class="btn btn-outline-success "  onclick="editProduct(${i})"><i class="fa fa-edit"> Edit</i></a></td>  
                               <td> <a href="javascript:;" class="btn btn-danger" onclick="removeProduct(${i})">Delete</a></td>
                           </tr>
@@ -44,7 +47,11 @@ function addproduct() {
   if (productName == "" || productBrand == "")  {
 
     if(isNullOrEmpty(productName) || isNullOrEmpty(productBrand)){
-        alert("Product is required!");
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Product name is required!',
+      })
     }
   } else {
     let product = new Product(productName, productBrand) ;
@@ -56,10 +63,32 @@ function addproduct() {
 });
   products.push(product);
   setLocalStorage(key, products);
-    showProduct();
+  showProduct(products, defaultPagesize, defaultPageindex);
     clearData();
   }
 
+}
+
+function changeIndex(index){
+  let pagesize = parseInt(document.getElementById('pagesize').value);
+  buildPaging(products, pagesize, index);
+  showProduct(products, pagesize, index);
+}
+
+function buildPaging(products, pagesize, pageindex){
+  let totalPages = Math.ceil(products.length/pagesize);
+  let paging = document.getElementById('paging');
+  paging.innerHTML = "";
+  for(let i=1; i<= totalPages; i++){
+      paging.innerHTML += `<li><button 	 class='btn btn-primary ${pageindex == i ? 'active' : ''}' 
+                                              onclick="changeIndex(${i})">${i}</button></li>`;
+  }
+}
+
+function changePagesize(){
+  let pagesize = parseInt(document.getElementById('pagesize').value);
+  buildPaging(products,pagesize, defaultPageindex);
+  showProduct(products, pagesize, defaultPageindex);
 }
    
 
@@ -85,7 +114,7 @@ function updateProduct(i){
   setLocalStorage(key,products);
   cancelAll();
   clearData();
-  showProduct();
+  showProduct(products, defaultPagesize, defaultPageindex);
 }
 
 function cancelAll(){
@@ -114,7 +143,7 @@ Swal.fire(
 )
 products.splice(i, 1);
 setLocalStorage(key, products);
-showProduct();
+showProduct(products, defaultPagesize, defaultPageindex);
 }
 })
 
@@ -130,7 +159,8 @@ function clearData(){
 
 function documentReady() {
   init();
-  showProduct();
+  showProduct(products, defaultPagesize, defaultPageindex);
+  buildPaging(products,defaultPagesize, defaultPageindex);
 }
 
 documentReady();

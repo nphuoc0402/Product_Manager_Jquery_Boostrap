@@ -57,6 +57,13 @@
         </div>
         <div class="mt-2">
             <div class="h2">Display all product</div>
+            <div>
+              <select id="pagesize" class="custom-select" onchange="changePagesize()">
+                  <option value="10">10</option>
+                  <option value="20">20</option>
+                  <option value="50">50</option>
+              </select>
+          </div>
             <table class="table table-hover">
                 <thead>
                   <tr>
@@ -72,10 +79,11 @@
                 </tbody>
               </table>
         </div>
+        <ul id="paging" style="display: flex; list-style-type:none; float: right;">
+        </ul>
       </div>
     </div>
     <script src="script.js">
-     
     </script>
   </body>
 </html>
