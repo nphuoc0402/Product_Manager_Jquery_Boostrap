@@ -1,9 +1,5 @@
 let products = [];
-let brands = ["IPhone","Nokia","SamSung","XiaoMi"];
 const key = "data-mobile";
-const defaultPagesize = 10;
-const defaultPageindex = 1;
-
 class Product {
   constructor(name, brand) {
     this.name = name;
@@ -20,20 +16,14 @@ function init() {
   getLocalStorage();
 }
 }
-function showProduct(data, pagesize, pageindex) {
+function showProduct() {
   let tbproduct = document.getElementById("tbproduct");
-  let option = document.getElementById("brand");
-  option.innerHTML = "";
-  for(let i = 0; i < brands.length; i++){
-    option.innerHTML += `<option value="${brands[i]}" >${brands[i]}</option> `;
-  }
   tbproduct.innerHTML = "";
-  let list = data.slice((pageindex -1)* pagesize, pageindex * pagesize);
-  for (let i = 0; i <list.length ; i++) {
+  for (let i = products.length - 1; i >0 ; i--) {
     tbproduct.innerHTML += `<tr id="tr_${i}">
-                              <td>${i + (pageindex -1)* pagesize + 1 }</td>
-                              <td>${list[i].name}</td>
-                              <td>${list[i].brand}</td>
+                              <td>${i }</td>
+                              <td>${products[i].name}</td>
+                              <td>${products[i].brand}</td>
                               <td> <a href="javascript:;"  id="show" class="btn btn-outline-success "  onclick="editProduct(${i})"><i class="fa fa-edit"> Edit</i></a></td>  
                               <td> <a href="javascript:;" class="btn btn-danger" onclick="removeProduct(${i})">Delete</a></td>
                           </tr>
@@ -64,40 +54,17 @@ function addproduct() {
     let product = new Product(productName, productBrand) ;
     Swal.fire({
     icon: 'success',
+    position: "bottom-end",
     title: 'Your work has been saved',
     showConfirmButton: false,
     timer: 1500
 });
   products.push(product);
   setLocalStorage(key, products);
-  showProduct(products, defaultPagesize, defaultPageindex);
+    showProduct();
     clearData();
   }
 
-}
-
-function changeIndex(index){
-  let pagesize = parseInt(document.getElementById('pagesize').value);
-  buildPaging(products, pagesize, index);
-  showProduct(products, pagesize, index);
-}
-
-function buildPaging(products, pagesize, pageindex){
-  let totalPages = Math.ceil(products.length/pagesize);
-  let paging = document.getElementById('paging');
-  paging.innerHTML = "";
-  for(let i=1; i<= totalPages; i++){
-      paging.innerHTML += `<li><button 	 class='btn btn-primary ${pageindex == i ? 'active' : ''}' 
-                                              onclick="changeIndex(${i})">${i}</button></li>`;
-  }
-}
-
-
-
-function changePagesize(){
-  let pagesize = parseInt(document.getElementById('pagesize').value);
-  buildPaging(products,pagesize, defaultPageindex);
-  showProduct(products, pagesize, defaultPageindex);
 }
    
 
@@ -123,7 +90,7 @@ function updateProduct(i){
   setLocalStorage(key,products);
   cancelAll();
   clearData();
-  showProduct(products, defaultPagesize, defaultPageindex);
+  showProduct();
 }
 
 function cancelAll(){
@@ -152,7 +119,7 @@ Swal.fire(
 )
 products.splice(i, 1);
 setLocalStorage(key, products);
-showProduct(products, defaultPagesize, defaultPageindex);
+showProduct();
 }
 })
 
@@ -168,8 +135,9 @@ function clearData(){
 
 function documentReady() {
   init();
-  showProduct(products, defaultPagesize, defaultPageindex);
-  buildPaging(products,defaultPagesize, defaultPageindex);
+  showProduct();
 }
 
 documentReady();
+
+
