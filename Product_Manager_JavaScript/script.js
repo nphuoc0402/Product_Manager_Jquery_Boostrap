@@ -1,8 +1,18 @@
 let products = [];
-let brands = ["IPhone","Nokia","SamSung","XiaoMi"];
+let brands = ["IPhone","Nokia","SamSung","XiaoMi","Vertu","BlackBerry"];
 const key = "data-mobile";
 const defaultPagesize = 10;
 const defaultPageindex = 1;
+
+let submit = document.getElementById("submit");
+submit.addEventListener("click",addproduct);
+
+let cancel = document.getElementById("cancel");
+cancel.addEventListener("click",cancelAll);
+
+let pagesize = document.getElementById("pagesize");
+pagesize.addEventListener("change",changePagesize);
+
 
 class Product {
   constructor(name, brand) {
@@ -29,9 +39,9 @@ function showProduct(data, pagesize, pageindex) {
   }
   tbproduct.innerHTML = "";
   let list = data.slice((pageindex -1)* pagesize, pageindex * pagesize);
-  for (let i = 0; i <list.length ; i++) {
+  for (let i = list.length - 1; i >= 0 ; i--) {
     tbproduct.innerHTML += `<tr id="tr_${i}">
-                              <td>${i + (pageindex -1)* pagesize + 1 }</td>
+                              <td>${i + (pageindex -1)* pagesize +1  }</td>
                               <td>${list[i].name}</td>
                               <td>${list[i].brand}</td>
                               <td> <a href="javascript:;"  id="show" class="btn btn-outline-success "  onclick="editProduct(${i})"><i class="fa fa-edit"> Edit</i></a></td>  
