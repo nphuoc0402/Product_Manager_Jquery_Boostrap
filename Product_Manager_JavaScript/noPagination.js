@@ -1,4 +1,5 @@
 let products = [];
+let brands = ["IPhone","Nokia","SamSung","XiaoMi","Vertu","BlackBerry"];
 const key = "data-mobile";
 class Product {
   constructor(name, brand) {
@@ -6,6 +7,20 @@ class Product {
     this.brand = brand;
   }
 }
+
+class Brand {
+  constructor(name){
+    this.name = name;
+  }
+}
+
+let submit = document.getElementById("submit");
+submit.addEventListener("click",addproduct);
+
+let cancel = document.getElementById("cancel");
+cancel.addEventListener("click",cancelAll);
+
+
 function init() {
   if (window.localStorage.getItem(key) == null) {
   let product1 = new Product("IPhone XS Max", "IPhone");
@@ -19,7 +34,12 @@ function init() {
 function showProduct() {
   let tbproduct = document.getElementById("tbproduct");
   tbproduct.innerHTML = "";
-  for (let i = products.length - 1; i >0 ; i--) {
+  let option = document.getElementById("brand");
+  option.innerHTML = "";
+  for(let i = 0; i < brands.length; i++){
+    option.innerHTML += `<option value="${brands[i]}" >${brands[i]}</option> `;
+  }
+  for (let i = 0; i <  products.length ; i++) {
     tbproduct.innerHTML += `<tr id="tr_${i}">
                               <td>${i }</td>
                               <td>${products[i].name}</td>
@@ -39,6 +59,7 @@ function getLocalStorage(){
 }
 
 function addproduct() {
+  let tbproduct = document.getElementById("tbproduct");
   let productName = document.getElementById("name").value;
   let productBrand = document.getElementById("brand").value;
   if (productName == "" || productBrand == "")  {
@@ -61,7 +82,15 @@ function addproduct() {
 });
   products.push(product);
   setLocalStorage(key, products);
-    showProduct();
+  tbproduct.innerHTML += `<tr id="tr_${products.length - 1}">
+                          <td>${(products.length - 1)}</td>
+                          <td>${(products[products.length - 1].name)}</td>
+                          <td>${(products[products.length - 1].brand)}</td>
+                          <td> <a href="javascript:;"  id="show" class="btn btn-outline-success "  onclick="editProduct(${(products.length - 1)})"><i class="fa fa-edit"> Edit</i></a></td>  
+                          <td> <a href="javascript:;" class="btn btn-danger" onclick="removeProduct(${products.length - 1})">Delete</a></td>
+</tr>
+`;
+console.log(products[products.length - 1]);
     clearData();
   }
 
@@ -119,7 +148,9 @@ Swal.fire(
 )
 products.splice(i, 1);
 setLocalStorage(key, products);
-showProduct();
+document.getElementById("tr_"+i).remove();
+// $("#tr_"+i).remove();
+// showProduct();
 }
 })
 

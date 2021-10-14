@@ -1,7 +1,7 @@
 let products = [];
 let brands = ["IPhone","Nokia","SamSung","XiaoMi","Vertu","BlackBerry"];
 const key = "data-mobile";
-const defaultPagesize = 10;
+const defaultPagesize = 5;
 const defaultPageindex = 1;
 
 let submit = document.getElementById("submit");
@@ -18,6 +18,12 @@ class Product {
   constructor(name, brand) {
     this.name = name;
     this.brand = brand;
+  }
+}
+
+class Brand {
+  constructor(name){
+    this.name = name;
   }
 }
 function init() {
