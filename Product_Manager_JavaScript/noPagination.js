@@ -39,7 +39,7 @@ function showProduct() {
   for(let i = 0; i < brands.length; i++){
     option.innerHTML += `<option value="${brands[i]}" >${brands[i]}</option> `;
   }
-  for (let i = 0; i <  products.length ; i++) {
+  for (let i =  products.length -1 ; i >  0 ; i--) {
     tbproduct.innerHTML += `<tr id="tr_${i}">
                               <td>${i }</td>
                               <td>${products[i].name}</td>
