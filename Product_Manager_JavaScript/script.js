@@ -45,7 +45,7 @@ function showProduct(data, pagesize, pageindex) {
   }
   tbproduct.innerHTML = "";
   let list = data.slice((pageindex -1)* pagesize, pageindex * pagesize);
-  for (let i = list.length - 1; i >= 0 ; i--) {
+  for (let i = 0; i <= list.length - 1 ; i++) {
     tbproduct.innerHTML += `<tr id="tr_${i}">
                               <td>${i + (pageindex -1)* pagesize +1  }</td>
                               <td>${list[i].name}</td>

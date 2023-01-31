@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.all.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
+    <script src="jquery.validate.min.js"></script>
+      <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+</head>
+<body>
+    <div class="container">
+        <div>
+          <div class="h1">Product Management</div>
+          <div class="card border-success">
+            <div class="card-header">Add new product</div>
+            <div class="card-body">
+                    <div class="form-row align-items-center ">
+                      <div class="col-5">
+                        <label class="sr-only" for="inlineFormInput">Name</label>
+                        <input type="text" class="form-control mb-2" name="name" id="name" placeholder="Enter name product" required>
+                      </div>
+                      <div class="col-3">
+                        <label class="sr-only" for="inlineFormInputGroup">Category</label>
+                        <div class="input-group mb-2">
+                          <select
+                          class="custom-select mr-sm-2"
+                          id="brand"
+                        >
+                        </select>
+                        </div>
+                      </div>
+                      <div class="col-2">
+                        <button type="button" class="btn btn-primary mb-2 col-12 " id="submit" > Add Product</button>
+                        <button type="button" class="btn btn-primary mb-2 col-12  d-none"  id="update" value=""  onclick="updateProduct(this.value)">Update</button>                     
+                      </div>
+                      <div class="col-2">
+                        <button type="button" disabled class="btn btn-outline-secondary mb-2 col-12" id="cancel" >Cancel</button>
+                      </div>
+                  
+                    </div>
+            </div>
+          </div>
+        </div>
+        <div class="mt-2">
+            <div class="h2">Display all product</div>
+            <div class="col-2">
+              <select width="30px" id="pagesize" class="custom-select"  >
+                  <option value="10">10</option>
+                  <option value="20">20</option>
+                  <option value="50">50</option>
+              </select>
+          </div>
+            <table class="table table-hover">
+                <thead>
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Product name</th>
+                    <th scope="col">Brand name</th>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
+                  </tr>
+                </thead>
+                <tbody id="tbproduct">
+                  
+                </tbody>
+              </table>
+        </div>
+        <ul id="paging" style="display: flex; list-style-type:none; float: right;">
+        </ul>
+      </div>
+    </div>
+    <script src="script.js">
+    </script>
+    <!-- <script src="noPagination.js"></script> -->
+  </body>
+</html>
