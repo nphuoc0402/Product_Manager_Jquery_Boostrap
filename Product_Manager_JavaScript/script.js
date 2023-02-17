@@ -1,5 +1,5 @@
 let products = [];
-let brands = ["IPhone","Nokia","SamSung","XiaoMi","Vertu","BlackBerry"];
+let brands = ["IPhone","Nokia","SamSung","XiaoMi","Vertu","BlackBerry","LG","HUAWEI"];
 const key = "data-mobile";
 const defaultPagesize = 5;
 const defaultPageindex = 1;
@@ -30,7 +30,9 @@ function init() {
   if (window.localStorage.getItem(key) == null) {
   let product1 = new Product("IPhone XS Max", "IPhone");
   let product2 = new Product("SamSung Galaxy A50", "SamSung");
-  products = [product1, product2];
+  let product3 = new Product("LG V20","LG");
+  let product4 = new Product("HUAWEI P40 Pro","HUAWEI");
+  products = [product1, product2, product3, product4];
   setLocalStorage(key,products)
 }else{
   getLocalStorage();
